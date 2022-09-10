@@ -1,0 +1,65 @@
+create database ProvaT2BD_25;
+use ProvaT2BD_25;
+
+create table empresas (
+cnpj char(19) not null,
+nome varchar(150) not null,
+razaoSocial varchar (150) not null,
+rua varchar (150) not null,
+numero int unsigned not null,
+cidade varchar (150) not null,
+bairro varchar (150) not null,
+cep char(9) not null,
+uf char(2) not null,
+telefone char(15) not null,
+site varchar(150) not null,
+email varchar(150) not null,
+primary key (cnpj)
+)engine = innodb;
+
+create table funcionario (
+cpf char(14) not null,
+nome varchar(150) not null,
+rua varchar(150) not null,
+numero int unsigned not null,
+cidade varchar(150) not null,
+bairro varchar(150) not null,
+cep char(9) not null,
+uf char(2) not null,
+telefone char(15) not null,
+empresas_cnpj char(19) not null,
+primary key(cpf),
+foreign key(empresas_cnpj) references empresas(cnpj)
+)engine = innodb;
+
+create table projeto (
+ID int unsigned auto_increment not null,
+nome varchar(150) not null,
+data date not null,
+horario time not null,
+local_ varchar (150) not null,
+preco double (9,2) not null,
+duracao int unsigned not null,
+funcionario_chefe char(14) not null,
+funcionario_normal char(14) not null,
+primary key (ID),
+foreign key (funcionario_chefe) references funcionario(cpf),
+foreign key (funcionario_normal) references funcionario(cpf)
+)engine = innodb;
+
+-- 2;
+insert into empresas values ('12.345.678/0001-12.','Lucas',"?",'Rua',1,'bh', 'buritis','30493-130','mg','(31) 965798756','.com','lucas.gmail.com');
+insert into empresas values ('12.345.678/0002-12.','João','?','Rua',2,'bh','Caiçara','58250-000','mg','(31) 93467895','joao.com','??@gmail.com');
+
+
+-- DELETANDO
+DELETE FROM funcionario WHERE numero = 20 AND cidade = "Ouro branco";
+
+-- ATUALIZANDO
+UPDATE projeto SET local_ = "sala 10" WHERE id = 10;
+
+-- SELECIONANDO
+SELECT AVG (preco) FROM projeto WHERE nome = "VENDAS ONLINE";
+
+-- SELECIONANDO
+SELECT empresa WHERE numero between 10 and 50;
